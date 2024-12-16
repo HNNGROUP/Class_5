@@ -156,11 +156,30 @@
       </div>
     </div>
   </div>
-  <script>
-    function handleDownload() {
+    <script>
+    function handleDownload(event, filename) {
+      event.preventDefault();
+
+      // Check if the file is already downloaded
+      const downloaded = localStorage.getItem(filename);
+
+      if (downloaded) {
+        console.log("File already downloaded. Re-downloading...");
+      } else {
+        console.log("Downloading for the first time...");
+        localStorage.setItem(filename, true);
+      }
+
+      // Trigger download
+      const link = document.createElement("a");
+      link.href = filename;
+      link.download = filename;
+      link.click();
+
+      // Close the window after 2 seconds
       setTimeout(() => {
         window.close();
-      }, 3000);
+      }, 2000);
     }
   </script>
 
